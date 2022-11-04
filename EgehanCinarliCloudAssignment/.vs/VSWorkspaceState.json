@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\ExtraFunction",
+    "\\ExtraFunction\\DAL",
     "\\ShowerShow",
     "\\ShowerShow\\Service"
   ],
-  "SelectedNode": "\\ShowerShow\\Service\\BlobStorageService.cs",
+  "SelectedNode": "\\ExtraFunction\\DAL\\DatabaseContext.cs",
   "PreviewInSolutionExplorer": false
 }

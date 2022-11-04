@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ExtraFunction.DAL;
-using ExtraFunction.Repository.Interface;
-using ExtraFunction.Service;
-using ExtraFunction.Repository;
+using ProductAndReviewFunction.DAL;
+using ProductAndReviewFunction.Repository.Interface;
+using ProductAndReviewFunction.Service;
+using ProductAndReviewFunction.Repository;
 
 namespace ExtraFunction
 {

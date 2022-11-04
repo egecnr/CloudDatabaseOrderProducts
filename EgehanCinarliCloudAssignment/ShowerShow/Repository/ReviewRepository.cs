@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Azure.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Extensions;
-using ShowerShow.DAL;
-using ShowerShow.DTO;
-using ShowerShow.Model;
-using ShowerShow.Models;
-using ShowerShow.Repository.Interface;
-using ShowerShow.Utils;
+using UserAndOrdersFunction.DAL;
+using UserAndOrdersFunction.DTO;
+using UserAndOrdersFunction.Model;
+using UserAndOrdersFunction.Models;
+using UserAndOrdersFunction.Repository.Interface;
+using UserAndOrdersFunction.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Repository
+namespace UserAndOrdersFunction.Repository
 {
     public class ReviewRepository : IReviewRepository
     {

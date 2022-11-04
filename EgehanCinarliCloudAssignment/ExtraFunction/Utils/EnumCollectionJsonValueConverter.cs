@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtraFunction.Utils
+namespace ProductAndReviewFunction.Utils
 {
     public class EnumCollectionJsonValueConverter<T> : ValueConverter<List<T>, string> where T : Enum
     {

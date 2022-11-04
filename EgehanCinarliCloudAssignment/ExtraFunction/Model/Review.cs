@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtraFunction.Model
+namespace ProductAndReviewFunction.Model
 {
     public class Review
     {

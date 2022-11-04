@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShowerShow.DTO
+namespace UserAndOrdersFunction.DTO
 {
     public class CreateReviewDTO
     {

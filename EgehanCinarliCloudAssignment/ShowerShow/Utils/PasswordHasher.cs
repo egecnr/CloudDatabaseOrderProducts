@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace ShowerShow.Utils
+namespace UserAndOrdersFunction.Utils
 {
     public class PasswordHasher
     {

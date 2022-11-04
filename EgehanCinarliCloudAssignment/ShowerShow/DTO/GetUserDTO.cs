@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
-using ShowerShow.Model;
-using ShowerShow.Models;
+using UserAndOrdersFunction.Model;
+using UserAndOrdersFunction.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShowerShow.DTO
+namespace UserAndOrdersFunction.DTO
 {
     public class GetUserDTO
     {

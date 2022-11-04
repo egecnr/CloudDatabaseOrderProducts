@@ -1,17 +1,17 @@
 ﻿using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.Hosting;
-using ShowerShow.DAL;
+using UserAndOrdersFunction.DAL;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using ShowerShow.Service;
-using ShowerShow.Repository.Interface;
-using ShowerShow.Repository;
+using UserAndOrdersFunction.Service;
+using UserAndOrdersFunction.Repository.Interface;
+using UserAndOrdersFunction.Repository;
 using Microsoft.Extensions.Configuration;
-using ShowerShow.Authorization;
+using UserAndOrdersFunction.Authorization;
 
-namespace ShowerShow
+namespace UserAndOrdersFunction
 {
     public class Program
     {

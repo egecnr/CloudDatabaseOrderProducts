@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ShowerShow.DTO;
-using ShowerShow.Repository.Interface;
+using UserAndOrdersFunction.DTO;
+using UserAndOrdersFunction.Repository.Interface;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace ShowerShow.Queue
+namespace UserAndOrdersFunction.Queue
 {
     public class CreateUserQueueTrigger
     {

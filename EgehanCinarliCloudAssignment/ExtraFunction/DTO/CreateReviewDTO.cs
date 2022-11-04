@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExtraFunction.DTO
+namespace ProductAndReviewFunction.DTO
 {
     public class CreateReviewDTO
     {

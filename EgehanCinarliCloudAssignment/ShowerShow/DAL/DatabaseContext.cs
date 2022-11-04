@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using User = ShowerShow.Models.User;
-using ShowerShow.Model;
+using User = UserAndOrdersFunction.Models.User;
+using UserAndOrdersFunction.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
 
-namespace ShowerShow.DAL
+namespace UserAndOrdersFunction.DAL
 {
     public class DatabaseContext : DbContext
     {

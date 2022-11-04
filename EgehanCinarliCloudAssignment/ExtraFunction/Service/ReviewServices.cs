@@ -1,11 +1,11 @@
-﻿using ExtraFunction.DTO;
-using ExtraFunction.Model;
-using ExtraFunction.Repository.Interface;
+﻿using ProductAndReviewFunction.DTO;
+using ProductAndReviewFunction.Model;
+using ProductAndReviewFunction.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ExtraFunction.Service
+namespace ProductAndReviewFunction.Service
 {
     public class ReviewServices : IReviewService
     {
@@ -49,6 +49,11 @@ namespace ExtraFunction.Service
             {
                 throw new Exception($"Product with product id {productId} doesn't exist.");
             }
+        }
+
+        public async Task<bool> CheckIfReviewExist(Guid productId)
+        {
+            return await reviewRepository.CheckIfReviewExist(productId);
         }
     }
 }

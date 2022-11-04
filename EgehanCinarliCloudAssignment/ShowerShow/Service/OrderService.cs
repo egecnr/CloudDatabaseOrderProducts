@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Extensions;
 using Microsoft.EntityFrameworkCore;
-using ShowerShow.DTO;
-using ShowerShow.Model;
-using ShowerShow.Repository.Interface;
+using UserAndOrdersFunction.DTO;
+using UserAndOrdersFunction.Model;
+using UserAndOrdersFunction.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Service
+namespace UserAndOrdersFunction.Service
 {
     public class OrderService : IOrderService
     {

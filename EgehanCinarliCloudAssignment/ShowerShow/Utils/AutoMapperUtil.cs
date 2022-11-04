@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using ShowerShow.DTO;
+using UserAndOrdersFunction.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Utils
+namespace UserAndOrdersFunction.Utils
 {
     public class AutoMapperUtil
     {

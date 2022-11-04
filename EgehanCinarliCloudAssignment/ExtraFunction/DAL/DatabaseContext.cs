@@ -1,8 +1,8 @@
-﻿using ExtraFunction.Model;
+﻿using ProductAndReviewFunction.Model;
 using Microsoft.Azure.Cosmos;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExtraFunction.DAL
+namespace ProductAndReviewFunction.DAL
 {
     public class DatabaseContext : DbContext
     {

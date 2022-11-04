@@ -1,4 +1,4 @@
-﻿using ShowerShow.Repository.Interface;
+﻿using UserAndOrdersFunction.Repository.Interface;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -7,7 +7,7 @@ using System.IO;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 
-namespace ShowerShow.Repository
+namespace UserAndOrdersFunction.Repository
 {
     public class BlobStorageRepository : IBlobStorageRepository
     {

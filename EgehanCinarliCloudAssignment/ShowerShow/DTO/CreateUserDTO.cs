@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using ShowerShow.Models;
+using UserAndOrdersFunction.Models;
 using System;
-using ShowerShow.Utils;
+using UserAndOrdersFunction.Utils;
 
-namespace ShowerShow.DTO
+namespace UserAndOrdersFunction.DTO
 {
     public class CreateUserDTO
     {

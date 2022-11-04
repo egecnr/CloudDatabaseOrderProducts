@@ -1,9 +1,9 @@
-﻿using ShowerShow.DTO;
-using ShowerShow.Model;
+﻿using UserAndOrdersFunction.DTO;
+using UserAndOrdersFunction.Model;
 using System;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Repository.Interface
+namespace UserAndOrdersFunction.Repository.Interface
 {
     public interface IProductService
     {

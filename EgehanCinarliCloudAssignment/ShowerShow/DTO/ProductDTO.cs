@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
-using ShowerShow.Model;
+using UserAndOrdersFunction.Model;
 
-namespace ShowerShow.DTO
+namespace UserAndOrdersFunction.DTO
 {
     public class ProductDTO
     {

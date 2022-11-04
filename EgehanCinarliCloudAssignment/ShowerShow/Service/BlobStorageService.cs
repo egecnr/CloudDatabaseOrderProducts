@@ -1,10 +1,10 @@
 ﻿using Microsoft.Azure.Functions.Worker.Http;
-using ShowerShow.Repository.Interface;
+using UserAndOrdersFunction.Repository.Interface;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Service
+namespace UserAndOrdersFunction.Service
 {
     public class BlobStorageService : IBlobStorageService
     {

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using ExtraFunction.DTO;
-using ExtraFunction.Model;
-using ExtraFunction.Repository.Interface;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Extensions;
 using Microsoft.EntityFrameworkCore;
+using ProductAndReviewFunction.DTO;
+using ProductAndReviewFunction.Model;
+using ProductAndReviewFunction.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ExtraFunction.Service
+namespace ProductAndReviewFunction.Service
 {
     public class ProductService : IProductService
     {

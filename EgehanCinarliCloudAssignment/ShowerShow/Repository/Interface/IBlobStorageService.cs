@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ShowerShow.Repository.Interface
+namespace UserAndOrdersFunction.Repository.Interface
 {
     public interface IBlobStorageService
     {

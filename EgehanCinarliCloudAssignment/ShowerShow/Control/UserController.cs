@@ -9,24 +9,24 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System;
-using User = ShowerShow.Models.User;
-using CreateUserDTO = ShowerShow.DTO.CreateUserDTO;
+using User = UserAndOrdersFunction.Models.User;
+using CreateUserDTO = UserAndOrdersFunction.DTO.CreateUserDTO;
 using AutoMapper;
-using ShowerShow.Repository.Interface;
-using ShowerShow.DTO;
-using ShowerShow.Models;
+using UserAndOrdersFunction.Repository.Interface;
+using UserAndOrdersFunction.DTO;
+using UserAndOrdersFunction.Models;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ShowerShow.Utils;
+using UserAndOrdersFunction.Utils;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Extensions;
 using System.Security.Claims;
-using ShowerShow.Service;
+using UserAndOrdersFunction.Service;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Text.Json;
 using Azure.Storage.Queues;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace ShowerShow.Controllers
+namespace UserAndOrdersFunction.Controllers
 {
     public class UserController
     {

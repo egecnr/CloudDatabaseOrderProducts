@@ -2,13 +2,13 @@
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Extensions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using ShowerShow.DTO;
-using ShowerShow.Repository.Interface;
+using UserAndOrdersFunction.DTO;
+using UserAndOrdersFunction.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Service
+namespace UserAndOrdersFunction.Service
 {
     public class UserService : IUserService
     {

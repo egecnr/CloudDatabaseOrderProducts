@@ -1,10 +1,10 @@
-﻿using ExtraFunction.DTO;
-using ExtraFunction.Model;
+﻿using ProductAndReviewFunction.DTO;
+using ProductAndReviewFunction.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ExtraFunction.Repository.Interface
+namespace ProductAndReviewFunction.Repository.Interface
 {
     public interface IReviewService
     {

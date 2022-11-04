@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowerShow", "ShowerShow\ShowerShow.csproj", "{3EFCD937-9A31-42E3-9D05-909F56AE6FA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserAndOrdersFunction", "ShowerShow\UserAndOrdersFunction.csproj", "{3EFCD937-9A31-42E3-9D05-909F56AE6FA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtraFunction", "ExtraFunction\ExtraFunction.csproj", "{77F9C967-4D46-4027-9F8C-C266A32F8C5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductAndReviewFunction", "ExtraFunction\ProductAndReviewFunction.csproj", "{77F9C967-4D46-4027-9F8C-C266A32F8C5E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B768614A-97D0-454C-AA59-F4F8B8E0F6A1}"
 	ProjectSection(SolutionItems) = preProject

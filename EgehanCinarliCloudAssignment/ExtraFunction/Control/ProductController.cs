@@ -8,13 +8,13 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using ExtraFunction.Model;
-using ExtraFunction.Repository.Interface;
-using ExtraFunction.DTO;
+using ProductAndReviewFunction.Model;
+using ProductAndReviewFunction.Repository.Interface;
+using ProductAndReviewFunction.DTO;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ExtraFunction.Control
+namespace ProductAndReviewFunction.Control
 {
     public class ProductController
     {

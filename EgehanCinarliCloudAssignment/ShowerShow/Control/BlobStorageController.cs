@@ -6,9 +6,9 @@ using Microsoft.OpenApi.Models;
 using System.Net;
 using System.Threading.Tasks;
 using System;
-using ShowerShow.Repository.Interface;
+using UserAndOrdersFunction.Repository.Interface;
 
-namespace ShowerShow.Controllers
+namespace UserAndOrdersFunction.Controllers
 {
     public class BlobStorageController
     {

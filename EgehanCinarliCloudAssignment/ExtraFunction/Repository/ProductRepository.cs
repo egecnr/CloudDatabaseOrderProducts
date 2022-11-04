@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ExtraFunction.DAL;
-using ExtraFunction.DTO;
-using ExtraFunction.Model;
-using ExtraFunction.Repository.Interface;
-using ExtraFunction.Utils;
+using ProductAndReviewFunction.DAL;
+using ProductAndReviewFunction.DTO;
+using ProductAndReviewFunction.Model;
+using ProductAndReviewFunction.Repository.Interface;
+using ProductAndReviewFunction.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ExtraFunction.Repository
+namespace ProductAndReviewFunction.Repository
 {
     public class ProductRepository : IProductRepository
     {

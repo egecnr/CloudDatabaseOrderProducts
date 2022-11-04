@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ShowerShow.Model
+namespace UserAndOrdersFunction.Model
 {
     public class Order
     {

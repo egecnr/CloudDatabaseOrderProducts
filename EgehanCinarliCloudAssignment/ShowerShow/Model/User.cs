@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using ShowerShow.Model;
+using UserAndOrdersFunction.Model;
 using System;
 using System.Collections.Generic;
 
 
-namespace ShowerShow.Models
+namespace UserAndOrdersFunction.Models
 {
     public class User
     {
