@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "appInsights1": {
+      "type": "appInsights"
+    },
+    "storage1": {
+      "type": "storage",
+      "connectionId": "AzureWebJobsStorage"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "secrets2": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
+    },
+    "cosmosdb1": {
+      "type": "cosmosdb",
+      "connectionId": "DBConnection",
+      "dynamicId": null
+    },
+    "cosmosdb2": {
+      "type": "cosmosdb",
+      "connectionId": "DBConnection",
+      "dynamicId": null
+    }
+  }
+}
