@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ShowerShow",
+    "\\ShowerShow\\Service"
   ],
+  "SelectedNode": "\\ShowerShow\\Service\\BlobStorageService.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,63 @@
+﻿using AutoMapper;
+using ExtraFunction.DAL;
+using ExtraFunction.DTO;
+using ExtraFunction.Model;
+using ExtraFunction.Repository.Interface;
+using ExtraFunction.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace ExtraFunction.Repository
+{
+    public class ReviewRepository : IReviewRepository
+    {
+        private DatabaseContext dbContext;
+
+
+        public ReviewRepository(DatabaseContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+        public async Task<bool> CheckIfReviewExist(Guid productId)
+        {
+            await dbContext.SaveChangesAsync();
+            if (dbContext.ProductReviews.Count(x => x.Id == productId) > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task CreateReview(CreateReviewDTO createReviewDTO, Guid productId)
+        {
+            Mapper mapper = AutoMapperUtil.ReturnMapper(new MapperConfiguration(con => con.CreateMap<CreateReviewDTO, Review>()));
+            Review productReview = mapper.Map<Review>(createReviewDTO);
+            productReview.ProductId = productId;
+            await dbContext.ProductReviews.AddAsync(productReview);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteReview(Guid id)
+        {
+            Review review = await GetReviewById(id);
+            dbContext.ProductReviews.Remove(review);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Review> GetReviewById(Guid reviewId)
+        {
+            await dbContext.SaveChangesAsync();
+            return dbContext.ProductReviews.FirstOrDefault(c => c.Id == reviewId);
+        }
+
+        public async Task<IEnumerable<Review>> GetAllTheReviewByProductId(Guid productId)
+        {
+            await dbContext.SaveChangesAsync();
+            return dbContext.ProductReviews.Where(c => c.ProductId == productId);
+        }
+    }
+}
