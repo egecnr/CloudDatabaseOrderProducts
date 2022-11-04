@@ -8,8 +8,11 @@ namespace ProductAndReviewFunction.Model
 {
     public class Review
     {
-        public Guid Id { get; set; }
+        //Since its anonymous, 
+        public Guid Id { get; set; } = Guid.NewGuid();
         public Guid ProductId { get; set; }
+        public string ReviewTitle { get; set; }
         public string UserReview { get; set; }
+        public DateTime ReviewDate { get; set; } = DateTime.Now;
     }
 }

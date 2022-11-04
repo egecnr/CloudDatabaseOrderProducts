@@ -35,9 +35,9 @@ namespace ProductAndReviewFunction.Repository
         public async Task CreateReview(CreateReviewDTO createReviewDTO, Guid productId)
         {
             Mapper mapper = AutoMapperUtil.ReturnMapper(new MapperConfiguration(con => con.CreateMap<CreateReviewDTO, Review>()));
-            Review productReview = mapper.Map<Review>(createReviewDTO);
-            productReview.ProductId = productId;
-            await dbContext.ProductReviews.AddAsync(productReview);
+            Review review = mapper.Map<Review>(createReviewDTO);
+            review.ProductId = productId;
+            await dbContext.ProductReviews.AddAsync(review);
             await dbContext.SaveChangesAsync();
         }
 

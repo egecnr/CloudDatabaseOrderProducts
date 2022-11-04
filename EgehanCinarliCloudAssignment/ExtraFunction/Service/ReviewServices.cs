@@ -31,12 +31,26 @@ namespace ProductAndReviewFunction.Service
 
         public async Task DeleteReview(Guid id)
         {
-            await reviewRepository.DeleteReview(id);
+            if(await CheckIfReviewExist(id))
+            {
+                await reviewRepository.DeleteReview(id);
+            }
+            else{
+                throw new Exception($"Review with id {id} does not exist.");
+            }
         }
 
         public async Task<Review> GetReviewById(Guid reviewId)
         {
-            return await reviewRepository.GetReviewById(reviewId);
+            if (await CheckIfReviewExist(reviewId))
+            {
+                return await reviewRepository.GetReviewById(reviewId);
+
+            }
+            else
+            {
+                throw new Exception($"Review with id {reviewId} does not exist.");
+            }
         }
 
         public async Task<IEnumerable<Review>> GetAllTheReviewByProductId(Guid productId)
