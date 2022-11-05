@@ -46,13 +46,13 @@ namespace UserAndOrdersFunction.Controllers
         [OpenApiParameter(name: "productId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid))]
         [OpenApiOperation(operationId: "GetProductPictureByProductId", tags: new[] { "Blob" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "image/jpeg", bodyType: typeof(byte[]), Description = "The OK response with the profile picture.")]
-        public async Task<HttpResponseData> GetProductPictureByProductId([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "product/pictures/{productId:Guid}")] HttpRequestData req, Guid UserId, FunctionContext functionContext)
+        public async Task<HttpResponseData> GetProductPictureByProductId([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "product/pictures/{productId:Guid}")] HttpRequestData req, Guid productId)
         {
 
             var responseData = req.CreateResponse();
             try
             {
-                responseData = await blobStorageService.GetProductPictureByProductId(responseData, UserId);
+                responseData = await blobStorageService.GetProductPictureByProductId(responseData, productId);
                 responseData.StatusCode = HttpStatusCode.OK;
                 return responseData;
             }
@@ -67,12 +67,12 @@ namespace UserAndOrdersFunction.Controllers
         [Function("DeleteProductPictureInBlob")]
         [OpenApiOperation(operationId: "DeleteProductPictureInBlob", tags: new[] { "Blob" })]
         [OpenApiParameter(name: "productId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid))]
-        public async Task<HttpResponseData> DeleteProductPictureInBlob([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "product/pictures/{productId:Guid}")] HttpRequestData req, Guid UserId, FunctionContext functionContext)
+        public async Task<HttpResponseData> DeleteProductPictureInBlob([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "product/pictures/{productId:Guid}")] HttpRequestData req, Guid productId)
         {
             var responseData = req.CreateResponse();
             try
             {
-                await blobStorageService.DeleteProductPictureInBlob(UserId);
+                await blobStorageService.DeleteProductPictureInBlob(productId);
                 responseData.StatusCode = HttpStatusCode.OK;
                 return responseData;
             }

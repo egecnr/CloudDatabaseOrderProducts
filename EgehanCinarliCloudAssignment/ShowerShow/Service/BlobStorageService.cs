@@ -9,31 +9,40 @@ namespace UserAndOrdersFunction.Service
     public class BlobStorageService : IBlobStorageService
     {
         private IBlobStorageRepository blobStorageRepository;
-        private IUserService userService;
+        private IProductService productService;
 
-        public BlobStorageService(IBlobStorageRepository blobStorageRepository,IUserService userService)
+        public BlobStorageService(IBlobStorageRepository blobStorageRepository,IProductService productService)
         {
             this.blobStorageRepository = blobStorageRepository;
-            this.userService = userService;
+            this.productService = productService;
         }
 
         public async Task DeleteProductPictureInBlob(Guid productId)
         {
-            if (!await userService.CheckIfUserExist(productId))
-                throw new ArgumentException("The user does not exist or is inactive.");
-            await blobStorageRepository.DeleteProductPictureInBlob(productId);
+            if(await productService.CheckIfProductExist(productId))
+            {
+                await blobStorageRepository.DeleteProductPictureInBlob(productId);
+
+            }
+            else
+            {
+                throw new Exception($"Product with product id {productId} does not exist");
+            
+            }
         }
 
         public async Task<HttpResponseData> GetProductPictureByProductId(HttpResponseData response, Guid productId)
         {
-            if (!await userService.CheckIfUserExist(productId))
-                throw new ArgumentException("The user does not exist or is inactive.");
+            if (await productService.CheckIfProductExist(productId))
+            {
+                return await blobStorageRepository.GetProductPictureByProductId(response, productId);
+            }
+            else
+            {
+                throw new Exception($"Product with product id {productId} does not exist");
 
-            return await blobStorageRepository.GetProductPictureByProductId(response, productId);
-        }
-
-      
-
+            }
+        }    
         public async Task CreateProductPictureInBlob(Stream requestBody, Guid productId)
         {        
             await blobStorageRepository.CreateProductPictureInBlob(requestBody, productId);
