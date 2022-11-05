@@ -1,4 +1,10 @@
-# CloudMobileMinor -> Student number : 641716   Student name : Egehan Cinarli
+# CloudMobileMinor -> 
+
+Student number : 641716   
+
+Student name : Egehan Cinarli 
+
+Chosen assignment: Online Store
 
 I have used a loosely coupled architecture that we have used in our project to increase performance.I have reused some of the util classes and some blob methods. 
 
