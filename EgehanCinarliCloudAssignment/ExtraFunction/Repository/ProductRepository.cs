@@ -59,7 +59,6 @@ namespace ProductAndReviewFunction.Repository
             Product product = await GetProductById(productId);
             product.Description = updateProductDTO.Description;
             product.Name = updateProductDTO.Name;
-            product.Stock = updateProductDTO.Stock;
             dbContext.Products.Update(product);
             await dbContext.SaveChangesAsync();
         }

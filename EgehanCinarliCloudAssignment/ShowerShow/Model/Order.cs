@@ -10,10 +10,11 @@ namespace UserAndOrdersFunction.Model
     public class Order
     {
         public Guid OrderId { get; set; } = Guid.NewGuid();
-        public Dictionary<string, int> allOrderItems { get; set; }
+        public List<string> ProductIds { get; set; } = new List<string>();
         public Guid UserId { get; set; }
-        public DateTime DateOfOrder { get; set; }
+        public DateTime DateOfOrder { get; set; } = DateTime.Now; //Initial creation of an order always has the creation date.
         public bool IsOrderSent { get; set; } = false;
         public DateTime? DateOfShipment { get; set; } = null;
+        public string Remarks { get; set; }
     }
 }

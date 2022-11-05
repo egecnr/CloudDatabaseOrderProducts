@@ -9,7 +9,6 @@ using UserAndOrdersFunction.Service;
 using UserAndOrdersFunction.Repository.Interface;
 using UserAndOrdersFunction.Repository;
 using Microsoft.Extensions.Configuration;
-using UserAndOrdersFunction.Authorization;
 
 namespace UserAndOrdersFunction
 {
@@ -19,7 +18,7 @@ namespace UserAndOrdersFunction
         static async Task Main(string[] args)
         {
             var host = new HostBuilder()
-                    .ConfigureFunctionsWorkerDefaults(Worker => Worker.UseNewtonsoftJson().UseMiddleware<JWTMiddleware>())
+                    .ConfigureFunctionsWorkerDefaults()
                     .ConfigureAppConfiguration(config =>
                          config.AddJsonFile("local.settings.json", optional: true, reloadOnChange: false))
                     .ConfigureOpenApi()

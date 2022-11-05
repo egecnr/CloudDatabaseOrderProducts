@@ -4,10 +4,9 @@ using UserAndOrdersFunction.Model;
 
 namespace UserAndOrdersFunction.DTO
 {
-    public class ProductDTO
+    public class CreateUpdateProductDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Stock { get; set; }
     }
 }

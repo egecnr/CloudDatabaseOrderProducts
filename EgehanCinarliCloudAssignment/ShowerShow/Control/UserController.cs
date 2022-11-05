@@ -45,7 +45,7 @@ namespace UserAndOrdersFunction.Controllers
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(CreateUserDTO), Description = "The OK response with the new user.")]
         public async Task<HttpResponseData> CreateUser([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "user/create")] HttpRequestData req)
         {
-            HttpResponseData responseData = req.CreateResponse();
+            var responseData = req.CreateResponse();
             try
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();

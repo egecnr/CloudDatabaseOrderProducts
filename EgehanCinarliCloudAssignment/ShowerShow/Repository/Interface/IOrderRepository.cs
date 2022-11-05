@@ -10,11 +10,15 @@ namespace UserAndOrdersFunction.Repository.Interface
 {
     public interface IOrderRepository
     {
-        public Task CreateOrder(CreateOrderDTO orderDTO, Guid userId);
-        public Task AddProductToOrder(Guid orderId, Guid productId);
-        public Task RemoveProductFromOrder(Guid orderId, Guid productId);
-        public Task ShipOrder(Guid orderId);
-        public Task<Order> GetOrderById(Guid orderId);
-        public Task<IEnumerable<Order>> GetOrderByUser(Guid userId);
+        Task CreateOrder(Order order);
+        Task CheckoutAndShipOrder(Order o);
+        Task<Order> ReturnFullOrderObjectById(Guid orderId);
+        Task<bool> CheckIfOrderExistAndNotShipped(Guid orderId);
+        Task AddOrderToQueue(CreateOrderDTO orderDto, Guid userId);
+        Task CreateProductInOrder(Guid orderId, Guid productId);
+        Task DeleteProductInOrder(Guid orderId, Guid productId);
+        Task<bool> CheckIfOrderExist(Guid orderId);
+        Task<GetOrderDTO> GetOrderByOrderId(Guid orderId);
+        Task<IEnumerable<GetOrderDTO>> GetOrdersOfUser(Guid userId);
     };
 }

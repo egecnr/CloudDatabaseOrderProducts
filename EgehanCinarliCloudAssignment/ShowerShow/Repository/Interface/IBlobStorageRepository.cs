@@ -7,8 +7,8 @@ namespace UserAndOrdersFunction.Repository.Interface
 {
     public interface IBlobStorageRepository
     {
-        public Task UploadProfilePicture(Stream requestBody, Guid userId);
-        public Task DeleteProfilePicture(Guid userId);
-        public Task<HttpResponseData> GetProfilePictureOfUser(HttpResponseData response, Guid userId);      
+        public Task CreateProductPictureInBlob(Stream requestBody, Guid userId);
+        public Task DeleteProductPictureInBlob(Guid userId);
+        public Task<HttpResponseData> GetProductPictureByProductId(HttpResponseData response, Guid userId);      
     }
 }

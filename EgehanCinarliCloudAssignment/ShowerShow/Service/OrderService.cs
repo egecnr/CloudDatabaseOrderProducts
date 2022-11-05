@@ -13,40 +13,114 @@ namespace UserAndOrdersFunction.Service
     public class OrderService : IOrderService
     {
         private IOrderRepository orderRepository;
+        private IUserService userService;
+        private IProductService productService;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IUserService userService, IProductService productService)
         {
-            this.orderRepository = orderRepository; 
+            this.orderRepository = orderRepository;
+            this.userService = userService;
+            this.productService = productService;
         }
 
-        public async Task AddProductToOrder(Guid orderId, Guid productId)
+        public async Task CreateProductInOrder(Guid orderId, Guid productId)
         {
-            await orderRepository.AddProductToOrder(orderId, productId);
+            if (!await productService.CheckIfProductExist(productId))
+            {
+                throw new Exception("Product doesnt exist");
+            }else if(!await orderRepository.CheckIfOrderExist(orderId))
+            {
+                throw new Exception($"Order with id {orderId} does not exist");
+            }
+            else if (!await orderRepository.CheckIfOrderExistAndNotShipped(orderId))
+            {
+                throw new Exception($"Order with id {orderId} has already been shipped");
+            }
+            else
+            {
+                await orderRepository.CreateProductInOrder(orderId, productId);
+            }
         }
 
-        public async Task CreateOrder(CreateOrderDTO orderDTO, Guid userId)
+        public async Task CreateOrder(Order order)
         {
-            await orderRepository.CreateOrder(orderDTO, userId);
+            await orderRepository.CreateOrder(order);
         }
 
-        public async Task<Order> GetOrderById(Guid orderId)
+        public async Task<GetOrderDTO> GetOrderByOrderId(Guid orderId)
         {
-            return await orderRepository.GetOrderById(orderId);
+            if(await orderRepository.CheckIfOrderExist(orderId))
+            {
+                return await orderRepository.GetOrderByOrderId(orderId);
+            }
+            else
+            {
+                throw new Exception("Order doesnt exist");
+            }
         }
 
-        public async Task<IEnumerable<Order>> GetOrderByUser(Guid userId)
+        public async Task<IEnumerable<GetOrderDTO>> GetOrdersOfUser(Guid userId)
         {
-            return await orderRepository.GetOrderByUser(userId);
+            if (await userService.CheckIfUserExist(userId))
+            {
+                return await orderRepository.GetOrdersOfUser(userId);
+
+            }
+            else
+            {
+                throw new Exception($"User with the id {userId} doesn't exist");
+            }
         }
 
-        public async Task RemoveProductFromOrder(Guid orderId, Guid productId)
+        public async Task DeleteProductInOrder(Guid orderId, Guid productId)
         {
-            await orderRepository.RemoveProductFromOrder(orderId, productId);
+            if (!await productService.CheckIfProductExist(productId))
+            {
+                throw new Exception("Product doesnt exist");
+            }
+            else if (!await orderRepository.CheckIfOrderExist(orderId))
+            {
+                throw new Exception($"Order with id {orderId} does not exist");
+            }
+            else if (!await orderRepository.CheckIfOrderExistAndNotShipped(orderId))
+            {
+                throw new Exception($"Order with id {orderId} has already been shipped");
+            }
+            else
+            {
+                await orderRepository.DeleteProductInOrder(orderId, productId);
+
+            }
         }
 
-        public async Task ShipOrder(Guid orderId)
+        public async Task CheckoutAndShipOrder(Guid orderId)
         {
-            await orderRepository.ShipOrder(orderId);
+            if(await orderRepository.CheckIfOrderExist(orderId))
+            {
+                Order o = await orderRepository.ReturnFullOrderObjectById(orderId);
+                await orderRepository.CheckoutAndShipOrder(o);
+            }
+            else
+            {
+                throw new Exception($"The order with the id {orderId} does not exist");
+            }
+        }
+
+        public async Task AddOrderToQueue(CreateOrderDTO orderDto, Guid userId)
+        {
+            if (await userService.CheckIfUserExist(userId))
+            {
+                await orderRepository.AddOrderToQueue(orderDto, userId); 
+            }
+            else
+            {
+                throw new Exception("User does not exist");
+            }
+        }
+
+        public async Task<bool> CheckIfOrderExist(Guid orderId)
+        {
+            return await orderRepository.CheckIfOrderExist(orderId);
         }
     }
 }

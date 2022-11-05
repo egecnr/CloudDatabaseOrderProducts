@@ -13,32 +13,59 @@ namespace UserAndOrdersFunction.Service
     public class ProductService : IProductService
     {
         private IProductRepository productRepository;
-        private IUserRepository userRepository;
 
-        public ProductService(IProductRepository productRepository, IUserRepository userRepository)
+
+        public ProductService(IProductRepository productRepository)
         {
-            this.userRepository = userRepository;
-            this.productRepository = productRepository; 
+
+            this.productRepository = productRepository;
         }
 
-        public async Task CreateProduct(ProductDTO productDTO)
+        public async Task<bool> CheckIfProductExist(Guid productId)
+        {
+            return await productRepository.CheckIfProductExist(productId);
+        }
+
+        public async Task CreateProduct(CreateUpdateProductDTO productDTO)
         {
             await productRepository.CreateProduct(productDTO);
         }
 
+        public Task<IEnumerable<Product>> GetAllProducts()
+        {
+            return productRepository.GetAllProducts();
+        }
+
         public async Task<Product> GetProductById(Guid productId)
         {
-            return await productRepository.GetProductById(productId);
+            if (await CheckIfProductExist(productId))
+                return await productRepository.GetProductById(productId);
+            else
+            {
+                throw new Exception($"Product with id {productId} does not exist.");
+            }
         }
 
         public async Task RemoveProduct(Guid productId)
         {
-            await productRepository.RemoveProduct(productId);
+            if (await CheckIfProductExist(productId))
+                await productRepository.RemoveProduct(productId);
+            else
+            {
+                throw new Exception($"Product with id {productId} does not exist.");
+            }
         }
 
-        public async Task UpdateProduct(Guid productId, ProductDTO updateProductDTO)
+        public async Task UpdateProduct(Guid productId, CreateUpdateProductDTO updateProductDTO)
         {
-            await productRepository.UpdateProduct(productId, updateProductDTO);
+            if (await CheckIfProductExist(productId))
+            {
+                await productRepository.UpdateProduct(productId, updateProductDTO);
+            }
+            else
+            {
+                throw new Exception($"Product with id {productId} does not exist.");
+            }
         }
     }
 }

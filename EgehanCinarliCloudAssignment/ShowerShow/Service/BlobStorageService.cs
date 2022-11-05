@@ -17,29 +17,26 @@ namespace UserAndOrdersFunction.Service
             this.userService = userService;
         }
 
-        public async Task DeleteProfilePicture(Guid userId)
+        public async Task DeleteProductPictureInBlob(Guid productId)
         {
-            if (!await userService.CheckIfUserExist(userId))
+            if (!await userService.CheckIfUserExist(productId))
                 throw new ArgumentException("The user does not exist or is inactive.");
-            await blobStorageRepository.DeleteProfilePicture(userId);
+            await blobStorageRepository.DeleteProductPictureInBlob(productId);
         }
 
-        public async Task<HttpResponseData> GetProfilePictureOfUser(HttpResponseData response, Guid userId)
+        public async Task<HttpResponseData> GetProductPictureByProductId(HttpResponseData response, Guid productId)
         {
-            if (!await userService.CheckIfUserExist(userId))
+            if (!await userService.CheckIfUserExist(productId))
                 throw new ArgumentException("The user does not exist or is inactive.");
 
-            return await blobStorageRepository.GetProfilePictureOfUser(response, userId);
+            return await blobStorageRepository.GetProductPictureByProductId(response, productId);
         }
 
       
 
-        public async Task UploadProfilePicture(Stream requestBody, Guid userId)
-        {
-          /*  if (!await userService.CheckIfUserExist(userId))
-                throw new ArgumentException("The user does not exist or is inactive.");*/
-
-            await blobStorageRepository.UploadProfilePicture(requestBody, userId);
+        public async Task CreateProductPictureInBlob(Stream requestBody, Guid productId)
+        {        
+            await blobStorageRepository.CreateProductPictureInBlob(requestBody, productId);
         }
 
    

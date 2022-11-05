@@ -21,100 +21,138 @@ namespace UserAndOrdersFunction.Repository
     public class OrderRepository : IOrderRepository
     {
         private DatabaseContext dbContext;
-        private IProductRepository productRepository;
+        private IProductService productService;
 
 
-        public OrderRepository(DatabaseContext dbContext, IProductRepository productRepository)
+        public OrderRepository(DatabaseContext dbContext, IProductService productService)
         {
             this.dbContext = dbContext;
-            this.productRepository = productRepository;
+            this.productService = productService;
         }
 
-        public async Task AddProductToOrder(Guid orderId, Guid productId)
+        public async Task CreateProductInOrder(Guid orderId, Guid productId)
         {
-            Order order = await GetOrderById(orderId);
-            Product product = await productRepository.GetProductById(productId);
-            ProductDTO productDTO = new ProductDTO()
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Stock = product.Stock--
-            };
-            await productRepository.UpdateProduct(productId, productDTO);
+            Order order = dbContext.Orders.FirstOrDefault(c => c.OrderId == orderId);
+            order.ProductIds.Add(productId.ToString());
+            dbContext.Orders.Update(order);
+            await dbContext.SaveChangesAsync();
 
-            if (order.allOrderItems.ContainsKey(productId.ToString()))
-            {
-                foreach (KeyValuePair<string, int> kvp in order.allOrderItems)
-                {
-                    if (kvp.Key == productId.ToString())
-                    {
-                        order.allOrderItems[kvp.Key] = kvp.Value + 1;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                order.allOrderItems.Add(productId.ToString(), 1);
-            }
         }
-
-        public async Task CreateOrder(CreateOrderDTO orderDTO, Guid userId)
+        public async Task AddOrderToQueue(CreateOrderDTO orderDto, Guid userId)
         {
             Mapper mapper = AutoMapperUtil.ReturnMapper(new MapperConfiguration(con => con.CreateMap<CreateOrderDTO, Order>()));
-            Order order = mapper.Map<Order>(orderDTO);
+            Order order = mapper.Map<Order>(orderDto);
             order.DateOfShipment = null;
             order.UserId = userId;
+            order.DateOfOrder = DateTime.Now;
+
+            string qName = Environment.GetEnvironmentVariable("CreateOrderQueue");
+            string connString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+            QueueClientOptions clientOpt = new QueueClientOptions() { MessageEncoding = QueueMessageEncoding.Base64 };
+
+            QueueClient qClient = new QueueClient(connString, qName, clientOpt);
+            var jsonOpt = new JsonSerializerOptions() { WriteIndented = true };
+            string orderJson = JsonSerializer.Serialize<Order>(order, jsonOpt);
+            await qClient.SendMessageAsync(orderJson);
+        }
+        public async Task CreateOrder(Order order)
+        {
             await dbContext.Orders.AddAsync(order);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Order> GetOrderById(Guid orderId)
+        public async Task<GetOrderDTO> GetOrderByOrderId(Guid orderId)
         {
             await dbContext.SaveChangesAsync();
 
-            return dbContext.Orders.FirstOrDefault(c => c.OrderId == orderId);
+            Order o=  dbContext.Orders.FirstOrDefault(c => c.OrderId == orderId);
+            return await GetOrderDTOConversion(o);
+           
         }
 
-        public async Task<IEnumerable<Order>> GetOrderByUser(Guid userId)
+        private async Task<GetOrderDTO> GetOrderDTOConversion(Order o)
         {
-            await dbContext.SaveChangesAsync();
+            List<Product> products = await ConvertProductIdsToObjects(o.ProductIds);
 
-            return dbContext.Orders.Where(c => c.UserId == userId).ToList();
-        }
-
-        public async Task RemoveProductFromOrder(Guid orderId, Guid productId)
-        {
-            Order order = await GetOrderById(orderId);
-            Product product = await productRepository.GetProductById(productId);
-            ProductDTO productDTO = new ProductDTO()
+            return new GetOrderDTO
             {
-                Name = product.Name,
-                Description = product.Description,
-                Stock = product.Stock++
+                Products = products,
+                DateOfOrder = o.DateOfOrder,
+                DateOfShipment = o.DateOfShipment,
+                Remarks = o.Remarks,
+                IsOrderSent = o.IsOrderSent
             };
-            await productRepository.UpdateProduct(productId, productDTO);
-            if (order.allOrderItems.ContainsKey(productId.ToString()))
+        }
+
+        private async Task<List<Product>> ConvertProductIdsToObjects(List<string> productIds)
+        {
+            List<Product> allProducts = new List<Product>();
+            foreach(string s in productIds)
             {
-                foreach (KeyValuePair<string, int> kvp in order.allOrderItems)
+                allProducts.Add(await productService.GetProductById(Guid.Parse(s)));
+            }
+            return allProducts;
+        }
+
+        public async Task<IEnumerable<GetOrderDTO>> GetOrdersOfUser(Guid userId)
+        {
+            await dbContext.SaveChangesAsync();
+
+           List<Order> orders= dbContext.Orders.Where(c => c.UserId == userId).ToList();
+
+           List<GetOrderDTO>ordersInNicePrint = new List<GetOrderDTO>();
+            foreach (Order o in orders)
+            {
+                ordersInNicePrint.Add(await GetOrderDTOConversion(o));
+            }
+            return ordersInNicePrint;
+        }
+
+        public async Task<bool> CheckIfOrderExist(Guid orderId)
+        {
+            await dbContext.SaveChangesAsync();
+            if (dbContext.Orders.Count(x => x.OrderId == orderId) > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task DeleteProductInOrder(Guid orderId, Guid productId)
+        {
+            Order order = dbContext.Orders.FirstOrDefault(c => c.OrderId == orderId);
+
+            foreach(string s in order.ProductIds)
+            {
+                if (s == productId.ToString())
                 {
-                    if (kvp.Key == productId.ToString())
-                    {
-                        order.allOrderItems[kvp.Key] = kvp.Value - 1;
-                        break;
-                    }
+                    order.ProductIds.Remove(s);
+                    break;
                 }
             }
-            else
-            {
-                throw new Exception("Cannot remove product");
-            }
+             dbContext.Orders.Update(order);
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task<Order> ReturnFullOrderObjectById(Guid orderId)
+        {
+            return dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
         }
 
-        public Task ShipOrder(Guid orderId)
+        public async Task CheckoutAndShipOrder(Order o)
         {
-          
-            throw new NotImplementedException();
+            o.IsOrderSent = true;
+            o.DateOfShipment = DateTime.Now;
+            dbContext.Orders.Update(o);
+            await dbContext.SaveChangesAsync();
+            
+        }
+
+        public async Task<bool> CheckIfOrderExistAndNotShipped(Guid orderId)
+        {
+            await dbContext.SaveChangesAsync();
+            if (dbContext.Orders.Where(sh => sh.IsOrderSent == false).Count(x => x.OrderId == orderId) > 0)
+                return true;
+            else
+                return false;
         }
     }
 }

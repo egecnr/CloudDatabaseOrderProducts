@@ -26,15 +26,14 @@ namespace UserAndOrdersFunction.Repository
         public ProductRepository(DatabaseContext dbContext)
         {
             this.dbContext = dbContext;
-        }     
-        public async Task CreateProduct(ProductDTO productDTO)
+        }
+        public async Task CreateProduct(CreateUpdateProductDTO productDTO)
         {
-            Mapper mapper = AutoMapperUtil.ReturnMapper(new MapperConfiguration(con => con.CreateMap<ProductDTO, Product>()));
+            Mapper mapper = AutoMapperUtil.ReturnMapper(new MapperConfiguration(con => con.CreateMap<CreateUpdateProductDTO, Product>()));
             Product product = mapper.Map<Product>(productDTO);
             await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
         }
-
         public async Task<Product> GetProductById(Guid productId)
         {
             await dbContext.SaveChangesAsync();
@@ -45,17 +44,34 @@ namespace UserAndOrdersFunction.Repository
         {
             Product product = await GetProductById(productId);
             dbContext.Products.Remove(product);
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateProduct(Guid productId, ProductDTO updateProductDTO)
+        public async Task<bool> CheckIfProductExist(Guid productId)
+        {
+            await dbContext.SaveChangesAsync();
+            if (dbContext.Products.Count(x => x.Id == productId) > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task UpdateProduct(Guid productId, CreateUpdateProductDTO updateProductDTO)
         {
             await dbContext.SaveChangesAsync();
 
             Product product = await GetProductById(productId);
             product.Description = updateProductDTO.Description;
             product.Name = updateProductDTO.Name;
-            product.Stock = updateProductDTO.Stock;
             dbContext.Products.Update(product);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProducts()
+        {
+            List<Product> listOfProducts = dbContext.Products.OrderBy(p => p.Name).ToList();
+
+            return listOfProducts;
         }
     }
 }

@@ -11,89 +11,87 @@ namespace UserAndOrdersFunction.Repository
 {
     public class BlobStorageRepository : IBlobStorageRepository
     {
-        //containers and connection strings
+        //Some of the methods are from the cloud project.
         private string producPicContainerString = Environment.GetEnvironmentVariable("ContainerProductPictures");
         private string connection = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
 
-       // Cloud blob instances
+     
         private CloudStorageAccount account;
         private CloudBlobClient blobClient;
-        private CloudBlobContainer profilePicContainer;
+        private CloudBlobContainer productPictureContainer;
 
         public BlobStorageRepository()
         {
-            // initialize account & containers
+            
             account = CloudStorageAccount.Parse(connection);
             blobClient = account.CreateCloudBlobClient();
-            profilePicContainer = blobClient.GetContainerReference(producPicContainerString);
+            productPictureContainer = blobClient.GetContainerReference(producPicContainerString);
 
         }
-        public async Task DeleteProfilePicture(Guid productId)
+        public async Task DeleteProductPictureInBlob(Guid productId)
         {
-            // get the picture blob
-            CloudBlockBlob blockBlob = profilePicContainer.GetBlockBlobReference(productId.ToString() + ".png");
          
-            if (!await profilePicContainer.ExistsAsync() || !await blockBlob.ExistsAsync()) //check for validity
+            CloudBlockBlob blockBlob = productPictureContainer.GetBlockBlobReference(productId.ToString() + ".png");
+         
+            if (!await productPictureContainer.ExistsAsync() || !await blockBlob.ExistsAsync()) 
                 throw new Exception("The specified container does not exist.");
 
-            await blockBlob.DeleteIfExistsAsync(); //delete picture blob
+            await blockBlob.DeleteIfExistsAsync(); 
         }
 
-        public async Task<HttpResponseData> GetProfilePictureOfUser(HttpResponseData response, Guid productId)
+        public async Task<HttpResponseData> GetProductPictureByProductId(HttpResponseData response, Guid productId)
         {
 
-            //get the picture blob
-            CloudBlockBlob blockBlob = profilePicContainer.GetBlockBlobReference(productId.ToString() + ".png");
+            CloudBlockBlob blockBlob = productPictureContainer.GetBlockBlobReference(productId.ToString() + ".png");
 
-            if (!await profilePicContainer.ExistsAsync())
-                throw new Exception("The specified container does not exist.");
+            if (!await productPictureContainer.ExistsAsync())
+                throw new Exception("Container doesn't exist");
 
-            // if the user does not have a picture, assign it the default picture
             if (!await blockBlob.ExistsAsync())
             {
-                blockBlob = profilePicContainer.GetBlockBlobReference("defaultpicture.png");
-                if (!await blockBlob?.ExistsAsync()) //if there is no default picture, throw exception
-                    throw new Exception("Unable to load profile picture.");
+                blockBlob = productPictureContainer.GetBlockBlobReference("defaultpicture.png");
+                if (!await blockBlob?.ExistsAsync()) 
+                    throw new Exception("Can not load the picture");
 
             }
             return GetDownloadResponseData(response, blockBlob, "image/jpeg").Result;
         }
 
-        public async Task UploadProfilePicture(Stream requestBody, Guid userId)
+        public async Task CreateProductPictureInBlob(Stream requestBody, Guid productId)
         {
-            // parse a Stream to a form
+          
             var parsedFormBody = MultipartFormDataParser.ParseAsync(requestBody);
-            // get the form's first file
+            
             var file = parsedFormBody.Result.Files[0];
 
-            //create the container if it doesn't exist
-            await profilePicContainer.CreateIfNotExistsAsync();
+            
+            await productPictureContainer.CreateIfNotExistsAsync();
 
-            // create the picture blob
-            CloudBlockBlob blockBlob = profilePicContainer.GetBlockBlobReference(userId.ToString() + ".png");
-            // make sure the blob content type is the same as the input file
+            
+            CloudBlockBlob blockBlob = productPictureContainer.GetBlockBlobReference(productId.ToString() + ".png");
+           
             blockBlob.Properties.ContentType = file.ContentType;
 
-            // check if the input file is an image | content-type e.g: 'image/jpeg'
+            
             if (!blockBlob.Properties.ContentType.Contains("image"))
                 throw new BadImageFormatException("You must input an image file.");
 
-            await blockBlob.UploadFromStreamAsync(file.Data); //upload image to container
+            await blockBlob.UploadFromStreamAsync(file.Data); 
         }
 
         public async Task<HttpResponseData> GetDownloadResponseData(HttpResponseData responseData, CloudBlockBlob blockBlob, string ContentType)
         {
-            // returns a response data containing the attachment file (audio/image), and the appropiate headers
+           
             using (MemoryStream ms = new MemoryStream())
             {
-                //download the blob contents into the stream
+         
                 await blockBlob.DownloadToStreamAsync(ms);
                 byte[] content = ms.ToArray();
-                responseData.WriteBytes(content); //write the content (audio/image) as bytes
-                //set specific headers
+                responseData.WriteBytes(content);
+                
                 responseData.Headers.Add("Content-Type", ContentType);
-                responseData.Headers.Add("Accept-Ranges", $"bytes"); // allow bytes
-                //content info
+                responseData.Headers.Add("Accept-Ranges", $"bytes");
+               
                 responseData.Headers.Add("Content-Disposition", $"attachment; filename={blockBlob.Name}; filename*=UTF-8'{blockBlob.Name}");
             }
             return responseData;
