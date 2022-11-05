@@ -13,7 +13,6 @@ namespace UserAndOrdersFunction.DAL
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
-        public DbSet<Review> ProductReviews { get; set; } = null!;
         
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
@@ -31,7 +30,6 @@ namespace UserAndOrdersFunction.DAL
             modelBuilder.Entity<User>().ToContainer("C_Users").HasPartitionKey(c => c.Id);
             modelBuilder.Entity<Order>().ToContainer("C_Orders").HasPartitionKey(c => c.UserId);
             modelBuilder.Entity<Product>().ToContainer("C_Products").HasPartitionKey(c => c.Id);
-            modelBuilder.Entity<Review>().ToContainer("C_Reviews").HasPartitionKey(c => c.ProductId);
         }
     }
 }

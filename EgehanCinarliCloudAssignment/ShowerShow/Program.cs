@@ -38,8 +38,6 @@ namespace UserAndOrdersFunction
                         services.AddTransient<IOrderService, OrderService>();
                         services.AddTransient<IProductRepository, ProductRepository>();
                         services.AddTransient<IProductService, ProductService>();
-                        services.AddTransient<IReviewRepository, ReviewRepository>();
-                        services.AddTransient<IReviewService, ReviewServices>();
                     })
                     .Build();
 
