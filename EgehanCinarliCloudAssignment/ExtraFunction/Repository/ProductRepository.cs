@@ -40,7 +40,7 @@ namespace ProductAndReviewFunction.Repository
         {
             Product product = await GetProductById(productId);
             dbContext.Products.Remove(product);
-           await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<bool> CheckIfProductExist(Guid productId)

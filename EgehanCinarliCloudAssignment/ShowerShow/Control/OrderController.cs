@@ -152,7 +152,7 @@ namespace UserAndOrdersFunction.Controllers
             return responseData;
         }
         [Function("CheckoutAndShipOrder")]
-        [OpenApiOperation(operationId: "CheckoutAndShipOrder", tags: new[] { "Orders " }, Summary = "Check out and finalize the order. Also ship the order")]
+        [OpenApiOperation(operationId: "CheckoutAndShipOrder", tags: new[] { "Order" }, Summary = "Check out and finalize the order. Also ship the order")]
         [OpenApiParameter(name: "orderId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid))]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Order))]
         public async Task<HttpResponseData> CheckoutAndShipOrder([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "orders/{orderId:Guid}/ship")] HttpRequestData req, Guid orderId)

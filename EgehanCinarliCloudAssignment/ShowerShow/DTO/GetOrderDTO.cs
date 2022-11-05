@@ -9,6 +9,7 @@ namespace UserAndOrdersFunction.DTO
 {
     public class GetOrderDTO
     {
+        public Guid OrderId { get; set; }
         public List<Product> Products { get; set; } //Just for better readability
         public DateTime DateOfOrder { get; set; }
         public bool IsOrderSent { get; set; } = false;

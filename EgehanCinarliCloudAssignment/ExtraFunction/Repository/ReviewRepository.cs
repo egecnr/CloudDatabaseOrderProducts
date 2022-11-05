@@ -23,10 +23,10 @@ namespace ProductAndReviewFunction.Repository
         {
             this.dbContext = dbContext;
         }
-        public async Task<bool> CheckIfReviewExist(Guid productId)
+        public async Task<bool> CheckIfReviewExist(Guid reviewId)
         {
             await dbContext.SaveChangesAsync();
-            if (dbContext.ProductReviews.Count(x => x.Id == productId) > 0)
+            if (dbContext.ProductReviews.Count(x => x.Id == reviewId) > 0)
                 return true;
             else
                 return false;

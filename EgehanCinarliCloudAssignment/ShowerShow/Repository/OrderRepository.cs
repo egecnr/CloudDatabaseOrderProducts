@@ -76,6 +76,7 @@ namespace UserAndOrdersFunction.Repository
 
             return new GetOrderDTO
             {
+                OrderId= o.OrderId,
                 Products = products,
                 DateOfOrder = o.DateOfOrder,
                 DateOfShipment = o.DateOfShipment,

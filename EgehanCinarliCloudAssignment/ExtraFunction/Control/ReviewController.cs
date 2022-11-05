@@ -54,7 +54,7 @@ namespace ProductAndReviewFunction.Control
         [Function("GetReviewById")]
         [OpenApiOperation(operationId: "GetReviewById", tags: new[] { "Review" }, Summary = "Get a review by its id", Description = "Get a rebiew by its review id")]
         [OpenApiParameter(name: "reviewId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The review id parameter")]
-        public async Task<HttpResponseData> GetReviewById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "review/get/{reviewId:Guid}")] HttpRequestData req, Guid reviewId)
+        public async Task<HttpResponseData> GetReviewById([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "review/{reviewId:Guid}")] HttpRequestData req, Guid reviewId)
         {
             HttpResponseData responseData = req.CreateResponse();
             try
@@ -79,7 +79,7 @@ namespace ProductAndReviewFunction.Control
         [OpenApiOperation(operationId: "GetAllReviewsByProductId", tags: new[] { "Review" }, Summary = "Get all reviews of a product", Description = "Get all reviews of one product to see everyone's opinion")]
         [OpenApiParameter(name: "productId", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "The product id parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Review), Description = "The OK response with the new product.")]
-        public async Task<HttpResponseData> GetAllReviewsByProductId([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "review/get/{productId:Guid}")] HttpRequestData req,Guid productId)
+        public async Task<HttpResponseData> GetAllReviewsByProductId([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "review/product/{productId:Guid}")] HttpRequestData req,Guid productId)
         {
             HttpResponseData responseData = req.CreateResponse();
             try

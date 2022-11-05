@@ -12,6 +12,8 @@ namespace UserAndOrdersFunction.DTO
     public class GetUserDTO
     {
         [JsonRequired]
+        public Guid Id { get; set; }
+        [JsonRequired]
         public string UserName { get; set; }
         [JsonRequired]
         public string EmailAddress { get; set; }

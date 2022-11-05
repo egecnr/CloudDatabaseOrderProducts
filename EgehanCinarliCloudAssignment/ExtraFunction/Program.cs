@@ -9,7 +9,7 @@ using ProductAndReviewFunction.Repository.Interface;
 using ProductAndReviewFunction.Service;
 using ProductAndReviewFunction.Repository;
 
-namespace ExtraFunction
+namespace ProductAndReviewFunction
 {
     public class Program
     {
